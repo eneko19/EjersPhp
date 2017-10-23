@@ -4,6 +4,7 @@
 	$nom = $llinatge = $dni = $telefon = $email = $data = $sexe = $coneixements = $expLab = "";
 	$nomErr = $llinatgeErr = $dniErr = $telefonErr = $emailErr = "";
 	$numSel = "";
+	$mostrar = false;
 
 	if ( isset ( $_POST["expLab"] ) )
 			$expLab = $_POST["expLab"];
@@ -19,19 +20,12 @@
 	  return $data;
 	}
 
-	function validarDni($dni){
-		$letra = substr($dni, -1);
-		$numeros = substr($dni, 0, -1);
-		if ( substr("TRWAGMYFPDXBNJZSQVHLCKE", $numeros%23, 1) == $letra && strlen($letra) == 1 && strlen ($numeros) == 8 ){
-			echo $dni;
-		}else{
-			echo 'no valido';
-		}
-	}
-
 ?>
 
 <html>
+<head>
+	<link rel="stylesheet" href="css.css">
+</head>
 <body>
 	<?php
 	//Si ha estat processat el formulari, mostro els resultats
@@ -54,13 +48,18 @@
 			$llinatgeErr = "";
 			$mostrar = true;
 		}
-		if (empty($_POST["dni"])) {
-			$mostrar = false;
-			$dniErr = "*";
-		} else {
-			$dni = validarDni($_POST["dni"]);
-			$dniErr = "";
-			$mostrar = true;
+		if (isset ($_POST["dni"])) {
+			$dni = $_POST["dni"];
+			$dniNum = strlen($dni);
+			$dniLetra = substr($dni, -1);
+			$dniNumeros = substr($dni, 0, 8);
+			if ($dni == "") {
+				$dniErr = "*";
+			}
+			elseif (!is_numeric($dniNumeros) || is_numeric($dniLetra) || $dniNum !== 9  ) {
+				$dniErr = "El DNI introducido no es válido";
+			}
+
 		}
 		if (empty($_POST["telefon"])) {
 			$mostrar = false;
@@ -70,10 +69,10 @@
 			$telefonErr = "";
 			$mostrar = true;
 		}
-		if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+		if (empty($_POST["email"])) {
 			$mostrar = false;
 			$emailErr = "*";
-		else {
+		}else {
 			$email = test_input($_POST["email"]);
 			$emailErr = "";
 			$mostrar = true;
@@ -138,6 +137,8 @@
 				background-color: grey;
 			}
 		</style>
+		<div class="form">
+
 	  <form action="formulario.php" method="post">
 	  Nom :              <input type="text"   name="nom"><?php echo $nomErr ?><br>
     Llinatge:          <input type="text" name="llinatge"><?php echo $llinatgeErr ?><br>
@@ -168,6 +169,7 @@
 
     <input type="submit" name="submit" value="Enviar">
   <?php } ?>
+			</div>
 
   </body>
   </html>
