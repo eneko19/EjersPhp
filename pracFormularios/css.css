@@ -1,6 +1,11 @@
-body{
-  margin-top: 50px;
-  text-align: center;
+body {
+  background: #c1bdba;
+  color: white;
+  font-family: 'Titillium Web', sans-serif;
+}
+table{
+  margin: auto;
+  background-color: black;
 }
 
 .form{
@@ -8,4 +13,134 @@ body{
   padding: 5px;
   width: 600px;
   border-style: inset;
+  text-align: center;
+}
+.form {
+  background: rgba(19, 35, 47, 0.9);
+  padding: 30px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+.tab-group {
+  padding-top: 30px;
+  text-align: center;
+}
+.errores{
+  display: none;
+  padding-bottom: 20px;
+}
+.aster{
+  margin: 10px;
+}
+input[type=submit] {
+    padding:20px 70px;
+    background: #1ab188;
+    color: #ffffff;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+input[type=reset] {
+    padding:20px 70px;
+    background: #1ab188;
+    color: #ffffff;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+input[type=submit]:hover {
+  background: #ccc;
+  color: #000;
+}
+input[type=reset]:hover {
+  background: #ccc;
+  color: #000;
+}
+h1 {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 300;
+  margin: 0 0 40px;
+}
+p{
+  font-size: 22px;
+  padding: 4px;
+  background: none;
+  background-image: none;
+  color: #ffffff;
+}
+
+input[type=text], input[type=date]{
+  font-size: 22px;
+  display: block;
+  padding: 4px;
+  background: none;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #ffffff;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+input:focus {
+  outline: 0;
+  border-color: #1ab188;
+  color: #1ab188;
+}
+
+.cont2{
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  height:165px;
+}
+.conocimientos{
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
+}
+.data{
+  text-align: left;
+  float: left;
+  width: 48%;
+}
+.radio{
+  width: 48%;
+  float: right;
+}
+.expLaboral{
+  padding-top: 20px;
+  border-bottom: 1px solid white;
+}
+span{
+  font-size: 22px;
+  padding: 4px;
+  background: none;
+  background-image: none;
+  color: #ffffff;
+}
+::-webkit-input-placeholder {
+  font-style: oblique;
+  font-size: 20px;
+}
+.field-wrap {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.top-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.top-row > div {
+  float: left;
+  width: 46%;
+  margin-right: 4%;
+}
+.top-row > div:last-child {
+  margin: 0;
 }

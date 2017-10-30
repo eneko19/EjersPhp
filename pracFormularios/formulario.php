@@ -2,17 +2,23 @@
 <?php
 	//inicialitzar les variables
 	$nom = $llinatge = $dni = $telefon = $email = $data = $sexe = $coneixements = $expLab = "";
-	$nomErr = $llinatgeErr = $dniErr = $telefonErr = $emailErr = "";
+	$nomErr = $llinatgeErr = $dniErr = $dniErro = $telefonErr = $emailErr = "";
 	$numSel = "";
-	$mostrar = false;
+	$comprobarEmail = "";
+	$mostrar = $mostrar2 = $mostrar3 = $mostrar4 = $mostrar5 = false;
 
+ //
 	if ( isset ( $_POST["expLab"] ) )
 			$expLab = $_POST["expLab"];
 	if ( isset ( $_POST["sexe"] ) )
 			$sexe= $_POST["sexe"];
 	if ( isset ( $_POST["data"] ) )
 			$data = $_POST["data"];
+	if ( isset ( $_POST["email"] ) )
+			$email = $_POST["email"];
 
+// Si no has insertado nada estará vacio si no está vacio
+// ejecuta el comentario
 	function test_input($data) {
 	  $data = trim($data);
 	  $data = stripslashes($data);
@@ -31,6 +37,7 @@
 	//Si ha estat processat el formulari, mostro els resultats
 	if (isset( $_POST['submit'] ) ) {
 
+ 	// Función para ver si la variable esta vacía
 		if (empty($_POST["nom"])) {
 			$mostrar = false;
 			$nomErr = "*";
@@ -41,12 +48,12 @@
 		}
 
 		if (empty($_POST["llinatge"])) {
-			$mostrar = false;
+			$mostrar2 = false;
 			$llinatgeErr = "*";
 		} else {
 			$llinatge = test_input($_POST["llinatge"]);
 			$llinatgeErr = "";
-			$mostrar = true;
+			$mostrar2 = true;
 		}
 		if (isset ($_POST["dni"])) {
 			$dni = $_POST["dni"];
@@ -56,43 +63,54 @@
 			if ($dni == "") {
 				$dniErr = "*";
 			}
-			elseif (!is_numeric($dniNumeros) || is_numeric($dniLetra) || $dniNum !== 9  ) {
-				$dniErr = "El DNI introducido no es válido";
+			elseif (!is_numeric($dniNumeros) || is_numeric($dniLetra) || $dniNum !== 9  || !(ctype_alpha($dniLetra))) {
+				$dniErr = "**";
+			}else {
+				$mostrar5 = true;
 			}
 
 		}
 		if (empty($_POST["telefon"])) {
-			$mostrar = false;
+			$mostrar3 = false;
 			$telefonErr = "*";
 		} else {
 			$telefon = test_input($_POST["telefon"]);
 			$telefonErr = "";
-			$mostrar = true;
+			$mostrar3 = true;
 		}
+
 		if (empty($_POST["email"])) {
-			$mostrar = false;
-			$emailErr = "*";
+				$mostrar4 = false;
+				$emailErr = "*";
+		} elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+				$emailErr = "**";
 		}else {
-			$email = test_input($_POST["email"]);
-			$emailErr = "";
-			$mostrar = true;
+				$mostrar4 = true;
 		}
 
 		if (isset ($_POST["coneixements"])) {
-							$sel = $_POST['coneixements'];
-							$contar = count($sel);
-							$numSel = false;
+					$sel = $_POST['coneixements'];
+					$contar = count($sel);
+					$numSel = false;
 
-							if ($contar == 0) {
-								$numSel = false;
-							} else {
-								$numSel = true;
-							}
-						}
+					if ($contar == 0) {
+						$numSel = false;
+					} else {
+						$numSel = true;
+					}
+				}
+
+				// Si cualquier boolean es false se muestra el div errores
+				if (!$mostrar || !$mostrar2 || !$mostrar3 || !$mostrar4 || !$mostrar5 ) {
+						echo "<style> .errores{display:block}</style>";
+				}
 	}
-
-	if ($mostrar) {
+	// Si todos los booleans son true muestra la información
+	if ($mostrar && $mostrar2 && $mostrar3 && $mostrar4 && $mostrar5) {
 		?>
+		<div class="tablai">
+			<h1>Tabla de informació</h1>
+		</div>
 		<table border="2" cellspacing="0" cellpadding="2" >
 		 <tr>
 			 <th>Nom: </th>
@@ -139,35 +157,75 @@
 		</style>
 		<div class="form">
 
+		<div class="tab-content">
+			<h1>Formulari</h1>
 	  <form action="formulario.php" method="post">
-	  Nom :              <input type="text"   name="nom"><?php echo $nomErr ?><br>
-    Llinatge:          <input type="text" name="llinatge"><?php echo $llinatgeErr ?><br>
-    DNI:               <input type="text" name="dni"><?php echo $dniErr ?><br>
-    Teléfon:           <input type="text" name="telefon"><?php echo $telefonErr ?><br>
-	  E-mail:            <input type="text" name="email"><?php echo $emailErr ?><br>
-    Data de naixement: <input type="date" name="data"><br><br>
-    Sexe: <br>
-    <input type="radio" name="sexe" value="Home" checked> Home<br>
-    <input type="radio" name="sexe" value="Dona"> Dona<br>
-    <input type="radio" name="sexe" value="Altre"> Altre<br><br>
 
-    Conocimientos: <br>
-    <input type="checkbox" name="coneixements[]" value="java">Java
-    <input type="checkbox" name="coneixements[]" value="html5">HTML5
-    <input type="checkbox" name="coneixements[]" value="javascript">Javascript
-    <input type="checkbox" name="coneixements[]" value="php">PHP
-    <input type="checkbox" name="coneixements[]" value="xml">XML
-    <input type="checkbox" name="coneixements[]" value=".net">.NET<br><br>
+			<div class="errores">
+				<span class="aster">*	Camp Obligatori</span>
+				<span class="aster">**	Format incorrecte</span>
+			</div>
 
-    Experiència Laboral:
-    <select name="expLab">
-      <option >Sense experiència</option>
-      <option >< 1 any</option>
-      <option >< 2 anys</option>
-      <option >>2 anys</option>
-    </select><br><br>
+			<div class="top-row">
 
-    <input type="submit" name="submit" value="Enviar">
+			<div class="field-wrap">
+				<input type="text" name="nom" placeholder="Nom<?php echo $nomErr ?>"><br>
+			</div>
+
+    	<div class="field-wrap">
+				<input type="text" name="llinatge" placeholder="Llinatge<?php echo $llinatgeErr ?>"><br>
+    	</div>
+
+			<div class="field-wrap">
+				<input type="text" name="dni" placeholder="DNI<?php echo $dniErr ?>"><br>
+			</div>
+
+			<div class="field-wrap">
+				<input type="text" name="telefon" placeholder="Teléfon<?php echo $telefonErr ?>"><br>
+			</div>
+
+			<div class="field-email">
+				<input type="text" name="email" placeholder="E-mail<?php echo $emailErr ?>"><br>
+			</div>
+			</div>
+		</div>
+				<div class="cont2">
+					<div class="data">
+						<p>Data de naixement:</p>
+						<input type="date" name="data"><br><br>
+					</div>
+					<div class="radio">
+						<p>Sexe:</p>
+						<input type="radio" name="sexe" value="Home" checked>Home<br>
+						<input type="radio" name="sexe" value="Dona">Dona<br>
+						<input type="radio" name="sexe" value="Altre">Altre<br>
+					</div>
+				</div>
+					<div class="conocimientos">
+						<p>Coneixements:</p>
+						<input type="checkbox" name="coneixements[]" value="java">Java
+						<input type="checkbox" name="coneixements[]" value="html5">HTML5
+						<input type="checkbox" name="coneixements[]" value="javascript">Javascript
+						<input type="checkbox" name="coneixements[]" value="php">PHP
+						<input type="checkbox" name="coneixements[]" value="xml">XML
+						<input type="checkbox" name="coneixements[]" value=".net">.NET<br><br>
+					</div>
+
+					<div class="expLaboral">
+						<span>Experiència Laboral:</span>
+						<select name="expLab">
+							<option >Sense experiència</option>
+							<option >< 1 any</option>
+							<option >< 2 anys</option>
+							<option >>2 anys</option>
+						</select><br><br>
+	</div>
+	<div class="tab-group">
+		<input type="reset" value="Borrar">
+		<input type="submit" name="submit" value="Enviar">
+	</div>
+
+
   <?php } ?>
 			</div>
 
