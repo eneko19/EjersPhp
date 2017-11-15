@@ -3,10 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title>Altas</title>
+    <style media="screen">
+
+      .formulario{
+        margin: auto;
+        width: 60%;
+        border: 2px solid blue;
+        text-align: center;
+        border-radius: 15px;
+        padding: 15px;
+      }
+      h1{
+        padding-bottom: 10px;
+        border-bottom: 1px solid black;
+      }
+    </style>
   </head>
   <body>
-    <h1>Alta de componente</h1>
     <form class="formulario" action="controlador.php" method="post">
+      <h1>Alta de componente</h1>
       <p>Tipo</p>
       <input list="tipos" name="tipos">
       <datalist id="tipos" name="tipos">
@@ -19,7 +34,7 @@
       <p>Modelo</p>
       <input type="text" name="modelo" ><br>
       <p>Precio</p>
-      <input type="number" name="precio" value="0"><br><br>
+      <input type="text" name="precio" value="0"><br><br>
       <textarea name="descripcion" rows="10" cols="50">Descripcion...</textarea>
       <br>
       <input type="submit" name="submit" value="Enviar">

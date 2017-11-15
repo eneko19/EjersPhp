@@ -8,7 +8,7 @@ $dbname = "ComponentsBD";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 
-$sql = "select id, tipo, model, descripcion, preu from components";
+
 /*function cerrarConexion($conn){
   $conn->close();
 }*/
@@ -26,9 +26,9 @@ function test_input($data) {
   $descripcion = test_input($_POST["descripcion"]);
 
   $consulta = "INSERT INTO components (tipo, model, descripcion, preu) VALUES
-   ('$tipo', '$modelo', '$descripcion', $precio)";
+   ('$tipo', '$modelo', '$descripcion', '$precio')";
 
-   if ($conn->query($sql) === TRUE) {
+   if ($conn->query($consulta) === TRUE) {
        header('location: index.php');
    }
 

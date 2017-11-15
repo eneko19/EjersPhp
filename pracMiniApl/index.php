@@ -2,18 +2,23 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Componentes</title>
+    <style media="screen">
+    h1{
+      text-align: center;
+    }
+    </style>
   </head>
   <body>
 
+    <h1>Componentes</h1>
     <div align='center'>
-  <table border='1' cellpadding='0' cellspacing='0' width='600' bgcolor='#F6F6F6' bordercolor='#FFFFFF'>
+  <table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#58ACFA' bordercolor='#FFFFFF'>
     <tr>
       <td width='150' style='font-weight: bold'>TIPO</td>
       <td width='150' style='font-weight: bold'>MODEL</td>
-      <td width='150' style='font-weight: bold'>DESCPRIPCION</td>
-      <td width='150' style='font-weight: bold'>PREU</td>
-      <td width='150' style='font-weight: bold'></td>
+      <td width='300' style='font-weight: bold'>DESCPRIPCION</td>
+      <td width='50' style='font-weight: bold'>PREU</td>
     </tr>
 
 <?php
@@ -36,11 +41,11 @@ if ($result->num_rows > 0) {
           <td width='150'>".$row['model']."</td>
           <td width='150'>".$row['descripcion']."</td>
           <td width='150'>".$row['preu']."</td>
-          <td width='150'></td>
         </tr>
-        </table>";
+        ";
 
   }
+  echo "</table>";
   echo "<a href=\"altas.php\"><button type=\"submit\" name=\"add\">Agregar</button></a>";
 }else {
  echo "0 results";
