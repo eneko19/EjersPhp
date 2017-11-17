@@ -13,15 +13,16 @@
 
     <h1>Componentes</h1>
     <div align='center'>
-  <table border='1' cellpadding='0' cellspacing='0' width='650' bgcolor='#58ACFA' bordercolor='#FFFFFF'>
+  <table border='1' cellpadding='0' cellspacing='0' width='600' bgcolor='#58ACFA' bordercolor='#FFFFFF'>
     <tr>
       <td width='150' style='font-weight: bold'>TIPO</td>
       <td width='150' style='font-weight: bold'>MODEL</td>
       <td width='300' style='font-weight: bold'>DESCPRIPCION</td>
-      <td width='50' style='font-weight: bold'>PREU</td>
+      <td width='100' style='font-weight: bold'>PREU</td>
+      <td width='50' style='font-weight: bold'>.- X</td>
     </tr>
-
 <?php
+// Me conecto a la base de datos
 $servername = "localhost";
 $username = "eneko";
 $password = "eneko";
@@ -29,18 +30,24 @@ $dbname = "ComponentsBD";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
+// variable que guarda la sentencia sql para mostrar los datos de la tabla components
     $sql = "select id, tipo, model, descripcion, preu from components";
+
+// Guarda el resultado de la sentencia sql ejecutada en una variable
 $result = $conn->query($sql);
-// Executa la Query
+
+// Mientras que el resultado tenga mas de 0 lineas se mostrarán los siguientes datos
 if ($result->num_rows > 0) {
-// Ara escrivim la informació obtenida per files
+
   while($row = $result->fetch_assoc()) {
     echo "
         <tr>
           <td width='150'>".$row['tipo']."</td>
           <td width='150'>".$row['model']."</td>
-          <td width='150'>".$row['descripcion']."</td>
-          <td width='150'>".$row['preu']."</td>
+          <td width='300'>".$row['descripcion']."</td>
+          <td width='100'>".$row['preu']."</td>
+          <td width='50'><a onClick=\"javascript: return confirm('¿Deseas eliminar este registro?');\"
+            href=\"controlador.php?id={$row['id']}\"><img src=\"eliminar.png\"></a></td>
         </tr>
         ";
 
@@ -51,6 +58,7 @@ if ($result->num_rows > 0) {
  echo "0 results";
 }
 
+// Cierra la conexión
   $conn->close();
 ?>
    </table>
