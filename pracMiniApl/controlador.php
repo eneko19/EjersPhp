@@ -45,4 +45,28 @@ function test_input($data) {
             echo "<br>Error:" . $conn->error;
         }
     }
+    /* MODIFICAR */
+    $idM = test_input($_POST["idM"]);
+    $tipoM = test_input($_POST["tiposM"]);
+    $modeloM = test_input($_POST["modeloM"]);
+    $precioM = test_input($_POST["precioM"]);
+    $descripcionM = test_input($_POST["descripcionM"]);
+
+    $modificar = "UPDATE components set tipo='$tipoM', model='$modeloM', descripcion='$descripcionM'
+                  preu='$precioM' where id = '$idM'";
+
+    if ($conn->query($modificar) === TRUE) {
+        header('location: index.php');
+    }else {
+      echo "ERROR";
+    }
+
+
+
+
+
+
+
+
+
  ?>

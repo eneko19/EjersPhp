@@ -7,6 +7,9 @@
     h1{
       text-align: center;
     }
+    td:last-child {
+      text-align: center;
+    }
     </style>
   </head>
   <body>
@@ -19,7 +22,8 @@
       <td width='150' style='font-weight: bold'>MODEL</td>
       <td width='300' style='font-weight: bold'>DESCPRIPCION</td>
       <td width='100' style='font-weight: bold'>PREU</td>
-      <td width='50' style='font-weight: bold'>.- X</td>
+      <td width='90' style='font-weight: bold'>Eliminar</td>
+      <td width='90' style='font-weight: bold'>Modificar</td>
     </tr>
 <?php
 // Me conecto a la base de datos
@@ -45,9 +49,11 @@ if ($result->num_rows > 0) {
           <td width='150'>".$row['tipo']."</td>
           <td width='150'>".$row['model']."</td>
           <td width='300'>".$row['descripcion']."</td>
-          <td width='100'>".$row['preu']."</td>
-          <td width='50'><a onClick=\"javascript: return confirm('¿Deseas eliminar este registro?');\"
+          <td width='100'>".$row['preu']."€</td>
+          <td width='90'><a onClick=\"javascript: return confirm('¿Deseas eliminar este registro?');\"
             href=\"controlador.php?id={$row['id']}\"><img src=\"eliminar.png\"></a></td>
+          <td width='90'><a onClick=\"javascript: return confirm('¿Deseas modificar este registro?');\"
+            href=\"modificar.php?id={$row['id']}\"><img src=\"edit.png\"></a></td>
         </tr>
         ";
 
