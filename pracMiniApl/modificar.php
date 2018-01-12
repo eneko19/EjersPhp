@@ -15,7 +15,10 @@ $sql = "SELECT tipo, model, descripcion, preu from components where id = $id";
 $result = $conn->query($sql);
 
 $row = $result->fetch_assoc();
- ?>
+
+session_start();
+if (isset($_SESSION['usuario'])) {
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -41,11 +44,10 @@ $row = $result->fetch_assoc();
     <body>
       <form class="formulario" action="controlador.php" method="post">
         <h1>Modificar componente</h1>
-        id <br>
-        <input type="text" name="idM" value="<?php echo $id ?>">
+        <input type="text" name="idM" value="<?php echo $id ?>" hidden="hidden">
         <p>Tipo</p>
-        <input list="tipos" name="tiposM" value="<?php echo $row['tipo'] ?>">
-        <datalist id="tipos">
+        <input list="tiposM" name="tiposM" value="<?php echo $row['tipo'] ?>">
+        <datalist id="tiposM">
           <option value="Placa Base">
           <option value="Procesador">
           <option value="Disco Duro">
@@ -58,8 +60,14 @@ $row = $result->fetch_assoc();
         <input type="text" name="precioM" value="<?php echo $row['preu'] ?>"><br><br>
         <textarea name="descripcionM" rows="10" cols="50" placeholder="Descripcion..."><?php echo $row['descripcion']?></textarea>
         <br>
-        <input type="submit" name="submit" value="Enviar">
+        <input type="submit" name="submitM" value="Enviar">
         <input type="button" onClick="document.location = 'index.php'" name="Cancelar" value="Cancelar">
       </form>
   </body>
 </html>
+
+<?php
+}else {
+  include('pantalla_login.php');
+}
+ ?>
